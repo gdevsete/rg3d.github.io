@@ -1,0 +1,114 @@
+    .quote-title p {
+        font-size:10pt!important;
+    }
+    .quote-meta strong {
+        font-size:9pt!important;
+    }
+    .quote-meta small {
+        font-size:7pt!important;
+    }
+    .product-table th {
+        font-size:7pt!important;
+    }
+    .product-table td {
+        font-size:7.5pt!important;
+    }
+    .product-name {
+        font-size:10pt!important;
+    }
+    .product-desc {
+        font-size:7.5pt!important;
+    }
+    .product-features {
+        font-size:6.5pt!important;
+    }
+    .product-table td:nth-child(3) {
+        font-size:13pt!important;
+    }
+    .product-table td:nth-child(4),.product-table td:nth-child(5) {
+        font-size:10pt!important;
+    }
+    .notes-block strong,.notes-block ul {
+        font-size:7pt!important;
+    }
+    .total-block small {
+        font-size:7pt!important;
+    }
+    .total-block>div:first-of-type {
+        font-size:34pt!important;
+    }
+    .benefits strong {
+        font-size:6.5pt!important;
+    }
+    .benefits small {
+        font-size:6pt!important;
+    }
+    .footer-logo {
+        font-size:21pt!important;
+    }
+    .footer-brand small {
+        font-size:5.5pt!important;
+    }
+    .footer-contacts span {
+        font-size:7pt!important;
+    }
+    .footer-slogan {
+        font-size:20pt!important;
+    }
+    .quote-footer {
+        min-height:0!important;
+    }
+    .product-visual {
+        max-height:none!important;
+        height:18mm!important;
+    }
+    .client-bar {
+        min-height:0!important;
+    }
+    .quote-sheet * {
+        -webkit-print-color-adjust:exact!important;
+        print-color-adjust:exact!important;
+    }
+
+/* Controles do total: valor manual por padrão, cálculo apenas quando solicitado. */
+.total-controls {
+    margin-top: 12px;
+}
+.field-help {
+    margin: 0;
+    color: #a6a6a6;
+    font-size: 12px;
+    line-height: 1.45;
+}
+#manualTotal {
+    font-weight: 800;
+    border-color: #ff7414;
+}
+#autoCalculateBtn {
+    margin-top: 2px;
+}
+/* O orçamento não exibe foto do produto: a coluna ITEM usa apenas um identificador. */
+.item-number {
+    display:inline-grid;
+    place-items:center;
+    width:30px;
+    height:30px;
+    border:1px solid #713a1b;
+    border-radius:7px;
+    color:var(--orange);
+    font-weight:900;
+    background:#21140e;
+    margin:auto;
+}
+.product-table td:first-child {
+    text-align:center;
+}
+@media print {
+    .brand-logo-image {
+        object-position:left center;
+    }
+    .footer-logo-image {
+        max-width:38mm;
+        height:15mm;
+    }
+}

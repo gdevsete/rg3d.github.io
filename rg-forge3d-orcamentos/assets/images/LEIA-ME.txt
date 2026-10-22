@@ -1,0 +1,6 @@
+IMAGENS DO ORÇAMENTO
+
+- logo.png: substitua por sua logomarca original em PNG. O layout usa object-fit: contain para preservar a proporção e impedir cortes.
+- header-industrial.png: banner industrial horizontal, sem logomarca embutida. A logomarca é aplicada separadamente por cima, assim não fica duplicada nem cortada.
+
+Mantenha os nomes dos arquivos para o sistema encontrá-los automaticamente.

@@ -1,0 +1,1228 @@
+/* ============================================================
+   R&G FORGE 3D — Gerador de orçamentos
+   CSS organizado: estilos-base, editor, orçamento, responsivo, impressão.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* 1. Tokens e normalização */
+:root {
+  --orange: #ff690b;
+  --orange-light: #ff8a16;
+  --black: #090909;
+  --panel: #151518;
+  --line: #39393f;
+  --muted: #a5a5aa;
+  --white: #f8f8f8;
+  /* Ajuste manual: 1 = 100%, 1.25 = 125%, 1.5 = 150%. */
+  --hero-logo-scale: 1.65;
+  --footer-logo-scale: 1;
+  --page-width: 850px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #101114;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: #101114;
+  color: #eee;
+  font-family: Inter, Arial, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. Cabeçalho do aplicativo */
+.app-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: 78px;
+  padding: 0 28px;
+  border-bottom: 1px solid #303035;
+  background: #151518;
+}
+
+.app-brand {
+  display: flex;
+  flex: 0 0 125px;
+  align-items: center;
+  width: 125px;
+  height: 58px;
+}
+
+.app-logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.header-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.header-copy strong {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+
+.header-copy span {
+  color: #9b9ba1;
+  font-size: 12px;
+}
+
+/* 3. Botões e elementos reutilizáveis do editor */
+.btn {
+  padding: 11px 14px;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: filter .15s ease, transform .15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.btn-orange {
+  background: var(--orange);
+  color: #111;
+}
+
+.btn-outline {
+  border: 1px solid #444;
+  background: transparent;
+  color: #f0f0f0;
+}
+
+.btn-quiet {
+  background: #29292d;
+  color: #ddd;
+}
+
+.full {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.muted {
+  color: #a1a1a8;
+}
+
+.eyebrow {
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+/* 4. Área de trabalho e painel de edição */
+.workspace {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 22px;
+}
+
+.editor {
+  position: sticky;
+  top: 98px;
+  max-height: calc(100vh - 120px);
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid #333338;
+  border-radius: 12px;
+  background: #18181b;
+  scrollbar-color: #555 #18181b;
+}
+
+.editor-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.editor h1,
+.preview-top h2 {
+  margin: 5px 0 0;
+  font-size: 18px;
+}
+
+.live-dot {
+  padding: 5px 7px;
+  border: 1px solid #74411f;
+  border-radius: 20px;
+  color: #ff9a53;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  white-space: nowrap;
+}
+
+.intro {
+  margin: 10px 0 17px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.edit-section {
+  padding: 13px 0;
+  border-top: 1px solid #333338;
+}
+
+.edit-section summary {
+  cursor: pointer;
+  list-style: none;
+  color: #f1f1f1;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
+}
+
+.edit-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.edit-section summary::after {
+  float: right;
+  color: var(--orange);
+  content: '＋';
+}
+
+.edit-section[open] summary::after {
+  content: '−';
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 13px;
+}
+
+.fields.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  color: #bcbcc2;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.fields input,
+.fields select,
+.fields textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid #39393e;
+  border-radius: 6px;
+  outline: none;
+  background: #0e0e10;
+  color: #f4f4f4;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.fields input:focus,
+.fields select:focus,
+.fields textarea:focus {
+  border-color: var(--orange);
+}
+
+.fields textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.item-editors {
+  display: grid;
+  gap: 10px;
+}
+
+.item-editor {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #3b3b40;
+  border-radius: 8px;
+  background: #111113;
+}
+
+.item-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.remove-item {
+  padding: 2px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: #342019;
+  color: #ff8b60;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.totals-fields {
+  margin-top: 12px;
+}
+
+.total-controls {
+  margin-top: 12px;
+}
+
+#manualTotal {
+  border-color: var(--orange);
+  font-weight: 800;
+}
+
+#autoCalculateBtn {
+  margin-top: 2px;
+}
+
+.field-help {
+  margin: 0;
+  color: #a6a6a6;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.editor-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 13px;
+  border-top: 1px solid #333;
+}
+
+.editor-bottom span {
+  color: #888;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* 5. Pré-visualização */
+.preview-area {
+  min-width: 0;
+}
+
+.preview-top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.preview-top h2 {
+  font-size: 17px;
+}
+
+.paper-label {
+  padding: 6px 8px;
+  border: 1px solid #45454a;
+  border-radius: 5px;
+  color: #aaa;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle {
+  white-space: nowrap;
+  border-color: #6a452e;
+  color: #ffad70;
+}
+
+.theme-toggle[aria-pressed="true"] {
+  background: #fff;
+  border-color: #d8d8d8;
+  color: #202020;
+}
+
+/* 6. Folha do orçamento — estrutura A4 */
+.quote-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: var(--page-width);
+  min-height: 0;
+  aspect-ratio: 210 / 297;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--black);
+  color: #f5f5f5;
+  box-shadow: 0 16px 45px #0007;
+  font-size: clamp(7px, .78vw, 10px);
+}
+
+/* Cabeçalho industrial */
+.quote-hero {
+  position: relative;
+  display: grid;
+  flex: 0 0 18%;
+  grid-template-columns: 55% 45%;
+  min-height: 0;
+  padding: 4.2% 4.3%;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, #111e 0%, #090909b8 54%, #09090955 100%),
+    url('../assets/images/header-industrial.png') center right / cover no-repeat;
+}
+
+.quote-hero::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 40%, #0007 100%);
+  content: '';
+  pointer-events: none;
+}
+
+.hero-brand,
+.hero-services {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.hero-brand {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+}
+
+.brand-logo-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+  min-width: 0;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(var(--hero-logo-scale));
+  transform-origin: left center;
+}
+
+.hero-services {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+  padding-left: 9%;
+  border-left: 1px solid var(--orange);
+  /* Os textos do cabeçalho industrial permanecem brancos em qualquer tema. */
+  color: #fff;
+}
+
+.hero-services > div > span:not(.service-icon),
+.hero-services > div > span:not(.service-icon) b {
+  color: #fff !important;
+}
+
+.hero-services > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(6px, .83vw, 10px);
+  line-height: 1.35;
+  letter-spacing: .2px;
+}
+
+.hero-services b {
+  font-weight: 800;
+}
+
+.service-icon {
+  width: 22px;
+  color: var(--orange);
+  font-size: clamp(17px, 2vw, 26px);
+  text-align: center;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -20%;
+  right: -6%;
+  width: 30%;
+  height: 150%;
+  background: linear-gradient(90deg, transparent, #ff690b0c, #ff690b25);
+  filter: blur(13px);
+}
+
+/* Título e metadados */
+.quote-title-row {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) 31%;
+  align-items: center;
+  gap: 4%;
+  padding: 3.1% 4.2% 2.2%;
+}
+
+.quote-title h1 {
+  margin: 0 0 10px;
+  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-size: clamp(34px, 6.3vw, 72px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: .9;
+  white-space: nowrap;
+}
+
+.quote-title p {
+  max-width: 95%;
+  margin: 0;
+  color: #8c8c92;
+  font-size: clamp(8px, 1.25vw, 14px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+}
+
+.quote-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 9% 11%;
+  border: 1px solid #555;
+  border-radius: 14px;
+}
+
+.quote-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.quote-meta > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.quote-meta small {
+  color: #aaa;
+  font-size: clamp(6px, .75vw, 9px);
+  letter-spacing: .4px;
+}
+
+.quote-meta strong {
+  overflow-wrap: anywhere;
+  font-size: clamp(8px, 1.1vw, 13px);
+  font-weight: 600;
+}
+
+/* Cliente */
+.client-bar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 8%;
+  margin: 0 4.2% 1.5%;
+  padding: 1.5% 3%;
+  border: 1px solid #565656;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #121212, #080808);
+}
+
+.client-avatar {
+  display: grid;
+  flex: 0 0 40px;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  max-width: 11%;
+  border: 1.5px solid var(--orange);
+  border-radius: 50%;
+  color: var(--orange);
+  font-size: 22px;
+}
+
+.client-bar > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.client-bar strong {
+  font-size: clamp(8px, 1vw, 12px);
+}
+
+.client-bar span {
+  overflow-wrap: anywhere;
+  font-size: clamp(8px, 1.15vw, 13px);
+}
+
+.client-bar small {
+  color: #aaa;
+  font-size: clamp(7px, .9vw, 10px);
+}
+
+/* Tabela de produtos: sem imagem de produto */
+.table-wrap {
+  flex: 0 0 auto;
+  margin: 0 4.2%;
+  overflow: hidden;
+  border: 1px solid #555;
+  border-radius: 11px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.product-table th {
+  padding: 12px 9px;
+  border-right: 1px solid #b84b0b;
+  background: var(--orange);
+  color: #0b0b0b;
+  font-size: clamp(6px, .82vw, 10px);
+  font-weight: 900;
+  text-align: left;
+}
+
+.product-table th:nth-child(1) { width: 10%; }
+.product-table th:nth-child(2) { width: 37%; }
+.product-table th:nth-child(3) { width: 11%; text-align: center; }
+.product-table th:nth-child(4) { width: 20%; text-align: center; }
+.product-table th:nth-child(5) { width: 22%; border-right: 0; text-align: center; }
+
+.product-table td {
+  padding: 9px 8px;
+  border-top: 1px solid #333;
+  border-right: 1px solid #444;
+  font-size: clamp(7px, .9vw, 11px);
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+
+.product-table td:first-child {
+  text-align: center;
+}
+
+.product-table td:nth-child(3),
+.product-table td:nth-child(4),
+.product-table td:nth-child(5) {
+  font-weight: 800;
+  text-align: center;
+}
+
+.product-table td:nth-child(3) {
+  font-size: clamp(10px, 1.5vw, 18px);
+}
+
+.product-table td:nth-child(4),
+.product-table td:nth-child(5) {
+  font-size: clamp(8px, 1.15vw, 14px);
+}
+
+.product-table td:last-child {
+  border-right: 0;
+}
+
+.item-number {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  border: 1px solid #713a1b;
+  border-radius: 7px;
+  background: #21140e;
+  color: var(--orange);
+  font-weight: 900;
+}
+
+.product-name {
+  margin-bottom: 7px;
+  font-size: clamp(9px, 1.25vw, 15px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.product-desc {
+  margin-bottom: 8px;
+  color: #b9b9be;
+  font-size: clamp(7px, .9vw, 11px);
+  line-height: 1.45;
+}
+
+.product-features {
+  display: grid;
+  gap: 4px;
+  color: #c4c4c7;
+  font-size: clamp(6px, .8vw, 9px);
+}
+
+.product-features span::before {
+  display: inline-grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 4px;
+  background: var(--orange);
+  color: #111;
+  content: '✓';
+  font-weight: 900;
+}
+
+/* Observações e valor total */
+.summary-panel {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: 62% 38%;
+  min-height: 15%;
+  margin: 2% 4.2% 0;
+  padding: 2.4% 3%;
+  border: 1px solid #555;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #101010, #080808);
+}
+
+.notes-block {
+  display: flex;
+  gap: 12px;
+  padding-right: 5%;
+  border-right: 1px solid var(--orange);
+  min-width: 0;
+}
+
+.notes-icon {
+  flex: 0 0 auto;
+  color: var(--orange);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.notes-block strong {
+  font-size: clamp(7px, .9vw, 10px);
+}
+
+.notes-block ul {
+  margin: 8px 0 0;
+  padding-left: 14px;
+  color: #bcbcc1;
+  font-size: clamp(7px, .9vw, 10px);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.production-line {
+  margin: 8px 0 0;
+  color: #aaa;
+  font-size: clamp(6px, .75vw, 9px);
+}
+
+.production-line b {
+  color: #eee;
+}
+
+.total-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  padding-left: 8%;
+}
+
+.total-block small {
+  font-size: clamp(7px, .9vw, 10px);
+  font-weight: 800;
+}
+
+.total-block > div:first-of-type {
+  color: var(--orange);
+  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-size: clamp(25px, 4.4vw, 49px);
+  font-weight: 900;
+  letter-spacing: -.6px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.breakdown {
+  color: #aaa;
+  font-size: 8px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* Benefícios */
+.benefits {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 3.3% 4.2%;
+}
+
+.benefits > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 0 9px;
+  border-right: 1px solid #5b351f;
+}
+
+.benefits > div:first-child { padding-left: 0; }
+.benefits > div:last-child { border-right: 0; }
+
+.benefit-icon {
+  flex: 0 0 auto;
+  color: var(--orange);
+  font-size: clamp(19px, 2.6vw, 30px);
+  font-weight: 400;
+}
+
+.benefits span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.benefits strong {
+  font-size: clamp(6px, .75vw, 9px);
+  white-space: nowrap;
+}
+
+.benefits small {
+  color: #aaa;
+  font-size: clamp(6px, .7vw, 8px);
+  line-height: 1.5;
+}
+
+/* Rodapé: acabamento industrial e contatos sem corte */
+.quote-footer {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 27%) minmax(0, 47%) minmax(0, 26%);
+  align-items: center;
+  gap: 0;
+  min-height: 11%;
+  margin-top: auto;
+  padding: 2.4% 4.2%;
+  overflow: hidden;
+  background:
+    linear-gradient(105deg, #ff760e 0%, #ff690b 48%, #171311 48%, #090909 100%),
+    url('../assets/images/header-industrial.png') center / cover no-repeat;
+  color: #111;
+}
+
+.quote-footer::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-top: 3px solid #ff9a33;
+  background: linear-gradient(110deg, transparent 0 55%, #08080865 55% 100%);
+  content: '';
+  pointer-events: none;
+}
+
+.footer-brand,
+.footer-contacts,
+.footer-slogan {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.footer-brand {
+  padding-right: 3%;
+}
+
+.footer-logo-image {
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  height: 52px;
+  margin-bottom: 0;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(var(--footer-logo-scale));
+  transform-origin: left center;
+}
+
+.footer-brand small {
+  display: block;
+  font-size: clamp(5px, .6vw, 7px);
+  font-weight: 800;
+  letter-spacing: .4px;
+  overflow-wrap: anywhere;
+}
+
+.footer-contacts {
+  display: grid;
+  gap: 3px;
+  padding: 2px 3% 2px 5%;
+  border-left: 1px solid #a6470c;
+  color: #111;
+}
+
+.footer-contacts span {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+  font-size: clamp(6px, .72vw, 8px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.footer-contacts b {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.footer-slogan {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: -4mm -9mm -4mm 0;
+  padding: 3mm 3mm 3mm 4mm;
+  border-left: 1px solid var(--orange);
+  background: linear-gradient(105deg, #111d 0%, #080808e8 100%), url('../assets/images/header-industrial.png') center right / cover no-repeat;
+  color: #fff;
+  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-size: clamp(16px, 2.5vw, 28px);
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: right;
+  text-shadow: 0 2px 8px #0008;
+}
+
+.footer-slogan b {
+  color: var(--orange-light);
+}
+
+/* Tema claro opcional: preserva o cabeçalho e o rodapé industriais da marca. */
+.quote-sheet.quote-light {
+  background: #fff;
+  color: #181818;
+  box-shadow: 0 16px 45px #0003;
+}
+
+.quote-light .quote-title p { color: #5f6065; }
+.quote-light .quote-meta { border-color: #bfc0c4; background: #fff; }
+.quote-light .quote-meta > div { border-bottom-color: #dedee1; }
+.quote-light .quote-meta small { color: #65656b; }
+.quote-light .quote-meta strong { color: #171717; }
+.quote-light .client-bar { border-color: #c7c7cb; background: linear-gradient(110deg, #fff, #f5f5f6); }
+.quote-light .client-bar strong,
+.quote-light .client-bar span { color: #191919; }
+.quote-light .client-bar small { color: #66666b; }
+.quote-light .table-wrap { border-color: #bdbdc2; }
+.quote-light .product-table td { border-top-color: #d9d9dd; border-right-color: #d0d0d4; color: #222; }
+.quote-light .item-number { border-color: #ffc08f; background: #fff3e8; color: #d95000; }
+.quote-light .product-desc,
+.quote-light .product-features { color: #5d5d63; }
+.quote-light .summary-panel { border-color: #c5c5c9; background: linear-gradient(110deg, #fff, #f5f5f6); }
+.quote-light .notes-block ul { color: #4d4d52; }
+.quote-light .production-line { color: #5e5e64; }
+.quote-light .production-line b { color: #222; }
+.quote-light .total-block small { color: #252525; }
+.quote-light .breakdown { color: #5e5e64; }
+.quote-light .benefits > div { border-right-color: #e2b18e; }
+.quote-light .benefits strong { color: #242424; }
+.quote-light .benefits small { color: #5e5e64; }
+
+.preview-hint {
+  margin: 13px 0 0;
+  color: #96969c;
+  font-size: 10px;
+  text-align: center;
+}
+
+.preview-hint b {
+  color: #eee;
+}
+
+/* 7. Telas menores */
+@media (max-width: 1100px) {
+  .workspace {
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .quote-title h1 {
+    font-size: clamp(30px, 5.5vw, 58px);
+  }
+
+  .quote-footer {
+    grid-template-columns: minmax(0, 27%) minmax(0, 47%) minmax(0, 26%);
+  }
+}
+
+@media (max-width: 850px) {
+  .app-header {
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .header-copy span {
+    display: none;
+  }
+
+  .header-copy strong {
+    font-size: 10px;
+  }
+
+  .app-header .btn {
+    padding: 10px;
+    font-size: 10px;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .editor {
+    position: relative;
+    top: auto;
+    max-height: none;
+  }
+
+  .quote-sheet {
+    font-size: 8px;
+  }
+
+  .quote-hero {
+    min-height: 100px;
+  }
+
+  .quote-title h1 {
+    font-size: clamp(30px, 7vw, 56px);
+  }
+
+  .quote-meta {
+    border-radius: 9px;
+  }
+
+  .summary-panel {
+    min-height: 0;
+  }
+
+  .product-table th {
+    padding: 8px 5px;
+  }
+
+  .product-table td {
+    padding: 6px 5px;
+  }
+}
+
+@media (max-width: 520px) {
+  .header-copy {
+    display: none;
+  }
+
+  .app-brand {
+    flex: 1 1 auto;
+  }
+
+  .fields.two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .preview-area {
+    overflow-x: auto;
+  }
+
+  .quote-sheet {
+    width: 520px;
+    max-width: none;
+    aspect-ratio: auto;
+    min-height: 735px;
+    transform-origin: top left;
+  }
+
+  .preview-top {
+    position: sticky;
+    left: 0;
+  }
+
+  .quote-hero {
+    min-height: 100px;
+  }
+
+  .quote-title h1 {
+    font-size: 36px;
+  }
+
+  .quote-title p {
+    font-size: 8px;
+  }
+
+  .quote-meta strong {
+    font-size: 9px;
+  }
+
+  .client-avatar {
+    flex-basis: 28px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .benefits > div {
+    gap: 5px;
+    padding: 0 5px;
+  }
+}
+
+/* Impressão paginada: até 2 produtos por página A4. */
+.print-pages { display: none; }
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  html, body { width: 210mm !important; margin: 0 !important; padding: 0 !important; background: #080808 !important; }
+  body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .app-header, .workspace, .preview-hint { display: none !important; }
+  .print-pages { display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important; }
+  .print-quote-page {
+    display: flex !important; flex-direction: column !important; position: relative !important;
+    width: 210mm !important; height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+    max-width: none !important; min-width: 0 !important; aspect-ratio: auto !important;
+    margin: 0 !important; padding: 0 !important; overflow: hidden !important; box-shadow: none !important;
+    break-after: page !important; page-break-after: always !important; font-size: 8pt !important;
+  }
+  .print-quote-page:last-child { break-after: auto !important; page-break-after: auto !important; }
+  .print-quote-page .quote-hero { flex: 0 0 42mm !important; height: 42mm !important; min-height: 42mm !important; padding: 4mm 9mm !important; }
+  .print-quote-page .quote-title-row { flex: 0 0 auto !important; padding: 7mm 9mm 4mm !important; grid-template-columns: 1fr 31% !important; }
+  .print-quote-page .quote-title h1 { font-size: 36pt !important; margin-bottom: 3mm !important; }
+  .print-quote-page .quote-title p { font-size: 8pt !important; }
+  .print-quote-page .quote-meta { padding: 4mm !important; gap: 2mm !important; }
+  .print-quote-page .client-bar { flex: 0 0 19mm !important; min-height: 19mm !important; margin: 0 9mm 4mm !important; padding: 3mm 5mm !important; }
+  .print-quote-page .table-wrap { flex: 0 0 auto !important; height: auto !important; margin: 0 9mm !important; overflow: visible !important; }
+  .print-quote-page .product-table { height: auto !important; }
+  .print-quote-page .product-table thead { display: table-header-group !important; }
+  .print-quote-page .product-table tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+  .print-quote-page .product-table th { padding: 3mm 2mm !important; font-size: 7pt !important; }
+  .print-quote-page .product-table td { padding: 4mm 2.5mm !important; font-size: 8pt !important; }
+  .print-quote-page .product-name { font-size: 10pt !important; }
+  .print-quote-page .product-desc { font-size: 7.5pt !important; }
+  .print-quote-page .product-features { font-size: 6.5pt !important; gap: 1mm !important; }
+  .print-quote-page .summary-panel { flex: 0 0 auto !important; min-height: 34mm !important; margin: 5mm 9mm 0 !important; padding: 4mm 5mm !important; grid-template-columns: 62% 38% !important; break-inside: avoid !important; }
+  .print-quote-page .notes-block strong, .print-quote-page .notes-block ul { font-size: 7pt !important; }
+  .print-quote-page .notes-block ul { line-height: 1.5 !important; }
+  .print-quote-page .total-block > div:first-of-type { font-size: 30pt !important; }
+  .print-quote-page .benefits { flex: 0 0 auto !important; margin: 8mm 9mm 5mm !important; }
+  .print-quote-page .benefits > div { padding: 0 2mm !important; gap: 2mm !important; }
+  .print-quote-page .benefits strong { font-size: 6.5pt !important; }
+  .print-quote-page .benefits small { font-size: 6pt !important; }
+  .print-quote-page .quote-footer { flex: 0 0 31mm !important; min-height: 31mm !important; height: 31mm !important; max-height: 31mm !important; margin-top: auto !important; padding: 2mm 9mm !important; grid-template-columns: minmax(0, 29%) minmax(0, 45%) minmax(0, 26%) !important; align-items: center !important; overflow: hidden !important; }
+  .print-quote-page .footer-brand { padding-right: 2mm !important; }
+  .print-quote-page .footer-logo-image { display: block !important; width: 100% !important; max-width: 43mm !important; height: 17mm !important; margin: 0 0 1mm !important; object-fit: contain !important; object-position: left center !important; transform: none !important; }
+  .print-quote-page .footer-contacts { gap: 1mm !important; padding: 1mm 2mm 1mm 3mm !important; }
+  .print-quote-page .footer-contacts span { font-size: 6pt !important; white-space: normal !important; overflow-wrap: anywhere !important; word-break: break-word !important; line-height: 1.2 !important; }
+  .print-quote-page .footer-slogan { align-self: stretch !important; margin: -2mm -9mm -2mm 0 !important; padding: 2mm 3mm 2mm 4mm !important; font-size: 16pt !important; background: linear-gradient(105deg, #111d 0%, #080808e8 100%), url('../assets/images/header-industrial.png') center right / cover no-repeat !important; }
+  .print-quote-page .quote-hero, .print-quote-page .quote-footer, .print-quote-page .product-table th, .print-quote-page .summary-panel { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .print-quote-page .hero-services, .print-quote-page .hero-services > div > span:not(.service-icon), .print-quote-page .hero-services > div > span:not(.service-icon) b { color: #fff !important; }
+  .print-quote-page.quote-light { background: #fff !important; color: #181818 !important; }
+  .print-quote-page.quote-light .quote-meta,
+  .print-quote-page.quote-light .client-bar,
+  .print-quote-page.quote-light .summary-panel { background: #fff !important; }
+  .print-quote-page.quote-light .quote-meta { border-color: #bfc0c4 !important; }
+  .print-quote-page.quote-light .quote-meta > div { border-bottom-color: #dedee1 !important; }
+  .print-quote-page.quote-light .quote-meta small,
+  .print-quote-page.quote-light .client-bar small,
+  .print-quote-page.quote-light .product-desc,
+  .print-quote-page.quote-light .product-features,
+  .print-quote-page.quote-light .notes-block ul,
+  .print-quote-page.quote-light .production-line,
+  .print-quote-page.quote-light .breakdown,
+  .print-quote-page.quote-light .benefits small { color: #555 !important; }
+  .print-quote-page.quote-light .quote-meta strong,
+  .print-quote-page.quote-light .client-bar strong,
+  .print-quote-page.quote-light .client-bar span,
+  .print-quote-page.quote-light .product-table td,
+  .print-quote-page.quote-light .notes-block strong,
+  .print-quote-page.quote-light .production-line b,
+  .print-quote-page.quote-light .total-block small,
+  .print-quote-page.quote-light .benefits strong { color: #181818 !important; }
+  .print-quote-page.quote-light .client-bar,
+  .print-quote-page.quote-light .table-wrap,
+  .print-quote-page.quote-light .summary-panel { border-color: #c5c5c9 !important; }
+  .print-quote-page.quote-light .product-table td { border-top-color: #d9d9dd !important; border-right-color: #d0d0d4 !important; }
+  .print-quote-page.quote-light .item-number { background: #fff3e8 !important; border-color: #ffc08f !important; }
+  .print-quote-page.quote-light .benefits > div { border-right-color: #e2b18e !important; }
+}
