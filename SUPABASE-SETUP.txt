@@ -9,3 +9,6 @@ R&G FORGE 3D — CONFIGURAÇÃO SUPABASE
 IMPORTANTE: a URL e a publishable key no js/supabase-config.js são próprias para frontend. Nunca coloque service_role / secret key no navegador. A tabela app_data usa RLS para que cada usuário só acesse os próprios dados.
 
 O sincronizador mantém as chaves existentes do aplicativo (estoque, calculadora e orçamento (rgforge3d-tools-v1) e as sincroniza com Supabase depois do login. A primeira sincronização mantém dados locais quando ainda não existe registro na nuvem; depois compara updated_at para decidir qual versão carregar. Faça backup JSON antes da primeira migração.
+
+
+Módulo Financeiro: execute novamente o arquivo supabase-setup.sql no SQL Editor para permitir a chave rgforge3d_finance_v1 na tabela app_data.
