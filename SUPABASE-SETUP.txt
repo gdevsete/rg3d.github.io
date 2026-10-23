@@ -9,3 +9,6 @@ R&G FORGE 3D — MODO SUPABASE-ONLY
 7. Se a gravação falhar, a interface mostra aviso vermelho; os dados não são tratados como salvos com sucesso. Confira RLS, SQL e a conexão.
 
 A chave publishable pode estar no frontend; NUNCA coloque service_role/secret key no site.
+
+8. O módulo Materiais e Investimentos utiliza a chave rgforge3d_materials_v1 em public.app_data. Se a tabela já existia, execute novamente a parte de atualização da constraint data_key do arquivo supabase-setup.sql (ou execute o arquivo inteiro, que usa create/drop policy de forma idempotente).
+9. Materiais e Financeiro são módulos separados para evitar duplicação automática de gastos. Lance cada compra em apenas um módulo quando for usar os totais financeiros consolidados.

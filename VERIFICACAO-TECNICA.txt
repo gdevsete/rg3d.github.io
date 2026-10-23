@@ -8,3 +8,8 @@ VERIFICAÇÃO TÉCNICA — MODO SUPABASE-ONLY
 - Dados antigos guardados apenas no localStorage do navegador não são migrados automaticamente para evitar importar dados sem confirmação.
 - A sessão do Supabase Auth continua sob gestão do SDK para que o login sobreviva à navegação entre páginas. Dados comerciais não são guardados nessa sessão.
 - Para sincronização em tempo real entre abas/dispositivos, habilite Realtime para public.app_data no Supabase.
+
+- Revisão adicional: criado o módulo dedicado materiais.html/js/materiais.js, usando app_data/data_key rgforge3d_materials_v1, com CRUD confirmado por resposta do Supabase, filtros, indicadores, edição, exclusão com restauração em falha, exportação JSON e tabela com rolagem interna.
+- Atualizado o allowlist de chaves no adaptador de autenticação e a constraint SQL para aceitar rgforge3d_materials_v1.
+- Revisão visual: navegação comum alinhada, botões e estados ativos consistentes, largura responsiva, prevenção de overflow em formulários/tabelas e breakpoints móveis.
+- Limite da verificação: sem acesso autenticado à instância real, não é possível certificar a execução de consultas/gravações no projeto Supabase do proprietário. É necessário aplicar/confirmar o SQL e testar com a conta real após publicar.

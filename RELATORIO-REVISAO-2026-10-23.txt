@@ -1,0 +1,25 @@
+R&G FORGE 3D — RELATÓRIO DE REVISÃO
+
+Alterações incluídas:
+- Criado o módulo dedicado Materiais e Investimentos.
+- Cadastro de insumos, acessórios, argolinhas, chaveiros, correntes, embalagens, filamento, ferramentas, manutenção, equipamentos e outros.
+- Campos para valor, quantidade, unidade, data, fornecedor, NF/pedido, saldo opcional e observações.
+- Custo unitário calculado automaticamente.
+- Edição, exclusão, busca, filtros, indicadores, exportação JSON e impressão/PDF.
+- Persistência direta na tabela public.app_data com a chave rgforge3d_materials_v1; a interface só confirma sucesso após resposta sem erro do Supabase.
+- Allowlist da aplicação e constraint SQL atualizadas para a nova chave.
+- Categorias do Financeiro ampliadas para compras comuns da impressão 3D.
+- Navegação e alinhamento responsivos revisados, tabelas com rolagem horizontal/vertical quando necessário.
+
+VALIDAÇÕES LOCAIS:
+- Validar sintaxe JavaScript dos módulos modificados com Node, se Node estiver disponível.
+- Conferir consistência da chave rgforge3d_materials_v1 no JS, adaptador e SQL.
+- Conferir se a página Materiais está referenciada na navegação.
+
+PENDENTE DE VALIDAÇÃO REAL:
+- Executar o SQL atualizado no projeto Supabase.
+- Confirmar que a tabela app_data possui RLS e policies corretas.
+- Entrar com o usuário real, cadastrar/editar/excluir um registro e conferir a linha em public.app_data.
+- Confirmar deploy bem-sucedido na Vercel e teste em desktop/mobile.
+
+Não é possível declarar a integração remota 100% testada sem autenticar e executar operações no Supabase real.
