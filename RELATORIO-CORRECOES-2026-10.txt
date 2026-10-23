@@ -1,0 +1,22 @@
+R&G FORGE 3D — CORREÇÕES APLICADAS
+===================================
+
+Arquivos alterados:
+- css/gestao.css: contenção dos painéis, tabelas em rolagem horizontal interna, campos flexíveis e ajustes responsivos.
+- js/estoque.js: normalização defensiva dos rolos carregados para evitar falhas quando registros antigos não possuem todos os campos; cálculos defensivos para peso/preço/saldo.
+- js/financeiro.js: prioriza o custo ponderado dos rolos cadastrados no Estoque; despesas de filamento lançadas manualmente só servem como alternativa quando não há estoque válido. Adicionada atualização ao receber mudanças do adaptador Supabase.
+
+Armazenamento:
+- O auth.js existente substitui o localStorage por adaptador em memória e grava os dados comerciais na tabela public.app_data do Supabase.
+- Não foi adicionada persistência comercial no navegador.
+- A sessão de autenticação continua gerenciada pelo SDK do Supabase.
+- Exportar backup JSON gera um arquivo somente quando o usuário solicita explicitamente.
+
+Validação executada:
+- node --check aprovado para todos os arquivos JavaScript incluídos.
+- Revisão estática dos estilos de tabelas/painéis e dos cálculos de custo por grama.
+
+Limitações:
+- Não foi possível executar teste de ponta a ponta autenticado contra o projeto Supabase/Vercel real neste ambiente.
+- É necessário testar login, permissões/RLS, gravação, leitura após recarga, exclusão, sincronização em segundo dispositivo e consumo de filamento na publicação real.
+- Custo médio do filamento é calculado como soma dos custos de compra dividida pela soma dos pesos iniciais cadastrados; perdas são aplicadas na estimativa financeira separadamente.

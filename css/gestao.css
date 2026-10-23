@@ -9,3 +9,30 @@
    Nas páginas dedicadas de gestão, todos os painéis devem ficar visíveis. */
 body:not(.tools-printing) .tool-page > .tool-panel { display: block !important; visibility: visible !important; opacity: 1 !important; }
 body:not(.tools-printing) .tool-page { display: block !important; visibility: visible !important; }
+
+
+/* Ajustes globais de alinhamento e contenção dos módulos de gestão */
+.tool-page, .tool-panel, .tool-heading, .table-wrap { min-width: 0; max-width: 100%; }
+.tool-panel { overflow: hidden; }
+.table-wrap { display:block; width:100%; max-width:100%; overflow-x:auto; overflow-y:hidden; border-radius:9px; overscroll-behavior-x:contain; }
+.table-wrap > table { width:100%; min-width:720px; }
+.finance-table { width:100%; min-width:760px; }
+.finance-summary { min-width:0; }
+.finance-summary > *, .metric-grid > *, .tool-grid > *, .finance-form-grid > * { min-width:0; }
+.top-nav { min-width:0; }
+.top-nav a { white-space:nowrap; }
+.tool-actions > * { max-width:100%; }
+.tool-field input, .tool-field select, .tool-field textarea { min-width:0; max-width:100%; }
+@media (max-width: 1100px) {
+  .app-header { gap:12px; padding-left:16px; padding-right:16px; }
+  .top-nav { gap:5px; }
+  .top-nav a { padding:9px 8px; font-size:10px; }
+  .tool-page { padding-left:18px; padding-right:18px; }
+}
+@media (max-width: 650px) {
+  .tool-panel { padding:15px; }
+  .tool-heading h1 { font-size:36px; }
+  .table-wrap { margin-right:0; }
+  .finance-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .finance-summary .metric strong { font-size:16px; overflow-wrap:anywhere; }
+}
