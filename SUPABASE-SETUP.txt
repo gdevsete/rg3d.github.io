@@ -1,0 +1,11 @@
+R&G FORGE 3D — CONFIGURAÇÃO SUPABASE
+
+1) No Supabase, abra SQL Editor, crie uma query e execute todo o arquivo supabase-setup.sql.
+2) Abra Authentication > Users e crie um usuário com e-mail ray@rgforge3d.local e senha forte definida por você; confirme o usuário se o projeto exigir. A tela aceita o nome ray e usa esse e-mail internamente. Não use uma senha fixa no código.
+3) Em Authentication > URL Configuration, configure Site URL para a URL publicada na Vercel e adicione também a URL local de desenvolvimento em Redirect URLs, se necessário.
+4) Na Vercel, faça redeploy depois de enviar os arquivos.
+5) Acesse /login.html.
+
+IMPORTANTE: a URL e a publishable key no js/supabase-config.js são próprias para frontend. Nunca coloque service_role / secret key no navegador. A tabela app_data usa RLS para que cada usuário só acesse os próprios dados.
+
+O sincronizador mantém as chaves existentes do aplicativo (estoque, calculadora e orçamento (rgforge3d-tools-v1) e as sincroniza com Supabase depois do login. A primeira sincronização mantém dados locais quando ainda não existe registro na nuvem; depois compara updated_at para decidir qual versão carregar. Faça backup JSON antes da primeira migração.

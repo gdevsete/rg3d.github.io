@@ -9,15 +9,3 @@
    Nas páginas dedicadas de gestão, todos os painéis devem ficar visíveis. */
 body:not(.tools-printing) .tool-page > .tool-panel { display: block !important; visibility: visible !important; opacity: 1 !important; }
 body:not(.tools-printing) .tool-page { display: block !important; visibility: visible !important; }
-
-
-/* Navegação responsiva compartilhada entre as páginas do sistema */
-@media (max-width: 900px) {
-  .app-header { height: auto; min-height: 78px; padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
-  .header-copy { flex: 1 1 180px; }
-  .top-nav { order: 3; width: 100%; margin-left: 0; gap: 6px; }
-  .top-nav a { padding: 8px 10px; }
-}
-@media (max-width: 520px) {
-  .top-nav a { flex: 1 1 auto; text-align: center; font-size: 10px; }
-}
