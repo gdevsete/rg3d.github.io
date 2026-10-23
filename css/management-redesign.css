@@ -1,0 +1,160 @@
+
+/* R&G Forge 3D — gestão v2: redesign responsivo. Não aplicar à página de Orçamentos. */
+body.management-page{
+ --mg-bg:#0b0d11;--mg-panel:#141820;--mg-panel-2:#191f29;--mg-border:#29313d;
+ --mg-text:#f3f5f8;--mg-muted:#9ba6b5;--mg-orange:#ff7918;--mg-orange-2:#ff9b45;
+ background:radial-gradient(ellipse at 15% -10%,rgba(255,121,24,.12),transparent 34%),var(--mg-bg);
+ color:var(--mg-text);min-height:100vh;
+}
+.management-page *{box-sizing:border-box}
+.management-page .app-header{
+ position:sticky;top:0;z-index:50;display:grid;grid-template-columns:auto minmax(180px,1fr) auto;
+ align-items:center;gap:22px;padding:12px clamp(14px,3vw,38px);
+ background:rgba(13,15,20,.94);border-bottom:1px solid var(--mg-border);
+ backdrop-filter:blur(18px);box-shadow:0 8px 30px #0002;
+}
+.management-page .app-brand{display:flex;align-items:center;min-width:0}
+.management-page .app-logo-image{display:block;width:92px;height:54px;object-fit:contain;object-position:left center}
+.management-page .header-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.management-page .header-copy strong{font-size:12px;letter-spacing:.14em;color:#fff;line-height:1.35}
+.management-page .header-copy span{font-size:12px;color:var(--mg-muted);line-height:1.4}
+.management-page .top-nav{display:flex;justify-content:flex-end;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+.management-page .top-nav a,.management-page #logoutBtn{
+ display:inline-flex;justify-content:center;align-items:center;min-height:36px;padding:8px 12px;
+ border:1px solid var(--mg-border);border-radius:9px;background:#151922;color:#cbd2dc;
+ text-decoration:none;font-size:12px;font-weight:650;white-space:nowrap;transition:.18s ease;
+}
+.management-page .top-nav a:hover,.management-page #logoutBtn:hover{border-color:#7a4928;color:#fff;background:#211b18}
+.management-page .top-nav a.active{color:#fff;border-color:var(--mg-orange);background:linear-gradient(135deg,#3b2114,#211711);box-shadow:inset 0 0 0 1px #ff791822}
+.management-page #logoutBtn{margin-left:0!important;cursor:pointer}
+.management-page .tool-page,.management-page .materials-page,.management-page .dashboard{
+ width:min(100%,1440px);max-width:1440px;margin:0 auto;padding:clamp(22px,3vw,42px) clamp(14px,3vw,40px) 56px;
+}
+.management-page .tool-heading,.management-page .welcome{margin:0 0 26px;max-width:100%}
+.management-page .eyebrow,.management-page .module-tag{color:var(--mg-orange-2);font-size:10px;font-weight:850;letter-spacing:.2em}
+.management-page .tool-heading h1,.management-page .welcome h1{
+ margin:10px 0 10px;font-size:clamp(30px,3.3vw,46px);line-height:1.08;letter-spacing:-.035em;color:#fff;
+}
+.management-page .tool-heading p,.management-page .welcome p{max-width:850px;color:var(--mg-muted);font-size:14px;line-height:1.75}
+.management-page .tool-panel{
+ display:block!important;visibility:visible!important;opacity:1!important;position:relative;
+ min-width:0;margin:0 0 20px;padding:clamp(17px,2.2vw,28px);
+ background:linear-gradient(145deg,rgba(24,29,38,.98),rgba(17,20,27,.98));
+ border:1px solid var(--mg-border);border-radius:16px;box-shadow:0 12px 32px #00016;overflow:hidden;
+}
+.management-page .tool-panel h2{margin:0 0 18px;font-size:clamp(16px,1.5vw,20px);line-height:1.35;color:#fff}
+.management-page .tool-grid,.management-page .finance-form-grid,.management-page .materials-form-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;
+}
+.management-page .tool-field{display:flex;flex-direction:column;gap:8px;min-width:0;color:#cbd2dc;font-size:12px;font-weight:650}
+.management-page .tool-field input,.management-page .tool-field select,.management-page .tool-field textarea,
+.management-page input:not([type=checkbox]):not([type=radio]):not([type=file]),.management-page select,.management-page textarea{
+ width:100%;min-width:0;max-width:100%;min-height:42px;padding:10px 12px;border:1px solid #343d4b;border-radius:9px;
+ background:#0c0f14;color:#f5f7fa;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.management-page input:focus,.management-page select:focus,.management-page textarea:focus{
+ border-color:var(--mg-orange)!important;box-shadow:0 0 0 3px #ff79181c;outline:none
+}
+.management-page input[readonly]{color:#aeb8c5;background:#11151c}
+.management-page .tool-actions,.management-page .materials-actions,.management-page .finance-actions{
+ display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:18px;min-width:0
+}
+.management-page .btn,.management-page button.btn,.management-page .materials-edit,.management-page .materials-delete,.management-page .finance-delete,.management-page .small-btn{
+ display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:39px;padding:9px 13px;border:1px solid #384251;border-radius:9px;
+ background:#1b222d;color:#e7ebf1;font-size:12px;font-weight:750;cursor:pointer;text-decoration:none;transition:.18s ease;
+}
+.management-page .btn:hover,.management-page .small-btn:hover{transform:translateY(-1px);border-color:#687587}
+.management-page .btn-orange{background:linear-gradient(135deg,#ff8c26,#f5670b)!important;color:#17100a!important;border-color:#ff8b28!important;box-shadow:0 5px 18px #ff79181e}
+.management-page .btn-outline{background:#171c25!important;color:#e2e7ef!important}
+.management-page button:disabled{opacity:.55;cursor:wait}
+.management-page .metric-grid,.management-page .finance-summary,.management-page .materials-metrics{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:18px 0;
+}
+.management-page .metric,.management-page .metric-card{
+ min-width:0;padding:17px 18px;border:1px solid var(--mg-border);border-radius:13px;
+ background:linear-gradient(140deg,#171d27,#11151c);box-shadow:inset 0 1px #ffffff04;
+}
+.management-page .metric span,.management-page .metric-card span{display:block;color:var(--mg-muted);font-size:11px;line-height:1.5;margin-bottom:8px}
+.management-page .metric strong,.management-page .metric-card strong{display:block;color:var(--mg-orange-2);font-size:clamp(17px,1.7vw,23px);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
+.management-page .table-wrap,.management-page .materials-scroll,.management-page .finance-list-scroll{
+ width:100%;max-width:100%;min-width:0;max-height:360px;overflow:auto;overscroll-behavior:contain;
+ border:1px solid var(--mg-border);border-radius:11px;scrollbar-gutter:stable;background:#10141a;
+}
+.management-page .tool-table,.management-page .finance-table,.management-page .materials-table{
+ width:100%;min-width:760px;border-collapse:separate;border-spacing:0;font-size:12px;
+}
+.management-page .tool-table th,.management-page .finance-table th,.management-page .materials-table th{
+ position:sticky;top:0;z-index:2;padding:13px 12px;background:#1c232e;color:#ffad70;text-align:left;
+ font-size:10px;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid #394250;white-space:nowrap;
+}
+.management-page .tool-table td,.management-page .finance-table td,.management-page .materials-table td{
+ padding:12px;border-bottom:1px solid #252d38;color:#dce2ea;vertical-align:middle;
+}
+.management-page .tool-table tbody tr:hover,.management-page .finance-table tbody tr:hover,.management-page .materials-table tbody tr:hover{background:#1b222c}
+.management-page .tool-table tbody tr:last-child td,.management-page .finance-table tbody tr:last-child td,.management-page .materials-table tbody tr:last-child td{border-bottom:0}
+.management-page .empty-state,.management-page .materials-empty{padding:28px 16px;text-align:center;color:var(--mg-muted);font-size:13px;line-height:1.6}
+.management-page .notice{padding:13px 15px;margin:12px 0;border:1px solid #76502b;border-radius:10px;background:#2a1e13;color:#ffd0a0;font-size:12px;line-height:1.65}
+.management-page .finance-note{color:#bdc5d1;font-size:12px;line-height:1.7}
+.management-page .finance-status,.management-page .materials-status{color:var(--mg-muted);font-size:12px;line-height:1.5;margin-left:auto}
+.management-page .finance-status[data-state=ok],.management-page .materials-status[data-state=ok]{color:#86e4ad}
+.management-page .finance-status[data-state=error],.management-page .materials-status[data-state=error]{color:#ff9b91}
+.management-page .materials-filters{display:grid;grid-template-columns:minmax(220px,1.5fr) repeat(2,minmax(160px,.7fr));gap:10px;margin:18px 0 12px}
+.management-page .materials-row-actions{white-space:nowrap}
+.management-page .materials-delete,.management-page .finance-delete{background:#2a191a;color:#ffaaa3;border-color:#62343a}
+.management-page .materials-edit{margin-right:5px}
+.management-page .module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.management-page .module-card{
+ display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:250px;padding:23px;
+ border:1px solid var(--mg-border);border-radius:16px;text-decoration:none;color:inherit;
+ background:linear-gradient(145deg,#191f29,#10141b);box-shadow:0 10px 28px #0002;transition:transform .2s,border-color .2s,background .2s;
+}
+.management-page .module-card:hover{transform:translateY(-3px);border-color:#85502d;background:linear-gradient(145deg,#222832,#151920)}
+.management-page .module-icon{display:grid;place-items:center;width:44px;height:44px;margin-bottom:18px;border-radius:12px;background:#392315;color:#ff9a4a;font-size:22px}
+.management-page .module-card h2{margin:9px 0;font-size:19px;line-height:1.3;color:#fff}
+.management-page .module-card p{margin:0 0 22px;color:var(--mg-muted);font-size:13px;line-height:1.7}
+.management-page .module-link{margin-top:auto;color:#ffad70;font-size:12px;font-weight:800}
+.management-page .dashboard-footer{margin-top:30px;padding-top:20px;border-top:1px solid var(--mg-border);color:var(--mg-muted);font-size:11px}
+.management-page .status{display:inline-flex;padding:5px 8px;border-radius:30px;font-size:10px;font-weight:800}
+.management-page .status.ok{background:#123024;color:#91e5b5}.management-page .status.warn{background:#382a13;color:#ffca77}.management-page .status.low{background:#3b1d20;color:#ffaaa3}
+.management-page .profit-positive{color:#91e5b5!important}
+.management-page .app-header #logoutBtn{flex-shrink:0}
+@media(max-width:1100px){
+ .management-page .app-header{grid-template-columns:auto 1fr;gap:12px}
+ .management-page .top-nav{grid-column:1/-1;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 4px}
+ .management-page .top-nav a{flex:0 0 auto}
+ .management-page .module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .management-page .metric-grid,.management-page .finance-summary,.management-page .materials-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ .management-page .tool-grid,.management-page .finance-form-grid,.management-page .materials-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .management-page .materials-filters{grid-template-columns:1fr 1fr}
+ .management-page .materials-filters input{grid-column:1/-1}
+ .management-page .tool-page,.management-page .materials-page,.management-page .dashboard{padding:22px 14px 38px}
+ .management-page .tool-panel{padding:18px}
+}
+@media(max-width:520px){
+ .management-page .app-header{padding:10px 12px;grid-template-columns:62px minmax(0,1fr);gap:10px}
+ .management-page .app-logo-image{width:62px;height:46px}
+ .management-page .header-copy strong{font-size:10px;letter-spacing:.08em}
+ .management-page .header-copy span{font-size:10px}
+ .management-page .top-nav{gap:6px}
+ .management-page .top-nav a{min-height:34px;padding:7px 10px;font-size:11px}
+ .management-page .tool-grid,.management-page .finance-form-grid,.management-page .materials-form-grid,
+ .management-page .metric-grid,.management-page .finance-summary,.management-page .materials-metrics,
+ .management-page .module-grid,.management-page .materials-filters{grid-template-columns:1fr}
+ .management-page .materials-filters input{grid-column:auto}
+ .management-page .tool-heading h1,.management-page .welcome h1{font-size:32px}
+ .management-page .tool-panel{padding:15px;border-radius:13px}
+ .management-page .tool-actions>* ,.management-page .materials-actions>* ,.management-page .finance-actions>*{max-width:100%}
+ .management-page .finance-status,.management-page .materials-status{width:100%;margin:4px 0 0}
+ .management-page .module-card{min-height:0;padding:19px}
+ .management-page .metric strong,.management-page .metric-card strong{font-size:20px}
+}
+@media print{
+ body.management-page{background:#fff!important;color:#111!important}
+ .management-page .app-header,.management-page .tool-actions,.management-page .materials-actions,.management-page .finance-actions,.management-page .materials-filters,.management-page .materials-form-panel{display:none!important}
+ .management-page .tool-panel{display:block!important;background:#fff!important;color:#111!important;box-shadow:none!important;border:1px solid #ccc!important;break-inside:avoid}
+ .management-page .tool-heading h1,.management-page .tool-panel h2,.management-page .tool-table td,.management-page .finance-table td,.management-page .materials-table td{color:#111!important}
+ .management-page .table-wrap,.management-page .materials-scroll,.management-page .finance-list-scroll{max-height:none;overflow:visible}
+ .management-page .tool-table,.management-page .finance-table,.management-page .materials-table{min-width:0}
+}

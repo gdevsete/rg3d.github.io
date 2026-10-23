@@ -1,0 +1,21 @@
+RELATÓRIO DE REVISÃO — R&G FORGE 3D
+Data: 23/10/2026
+
+CORREÇÕES REALIZADAS NESTA VERSÃO
+- Criado css/management-redesign.css com identidade visual renovada para as páginas de gestão, layout responsivo, tabelas com rolagem interna e melhor alinhamento.
+- Aplicado o novo estilo às páginas Painel, Precificação, Filamentos, Financeiro, Materiais e Pedidos. A página orcamentos.html e seu CSS visual não foram alterados.
+- Corrigida a causa da página Materiais parecer vazia: os painéis .tool-panel eram ocultados por uma regra CSS global. O novo estilo os torna visíveis nas páginas de gestão.
+- Reescrito js/estoque.js para ler e gravar diretamente em public.app_data no Supabase, usando data_key rgforge3d_stock_v1. Cadastro de rolo, entrada de estoque, consumo, histórico, exclusão e importação de backup aguardam confirmação do Supabase e restauram a tela em caso de falha.
+- Adicionado indicador de sincronização do estoque e atualização via Supabase Realtime.
+- Mantidos os botões de exportar/importar backup JSON como ações explícitas do usuário; não são usados como armazenamento automático.
+
+VERIFICAÇÕES EXECUTADAS LOCALMENTE
+- node --check executado em todos os arquivos JavaScript do projeto: aprovado.
+- Conferência estática dos IDs usados pelos módulos de Materiais, Estoque, Financeiro, Calculadora e Pedidos: nenhum ID de página ausente (o indicador stockSyncStatus é criado dinamicamente).
+- Conferência de referências ao novo CSS nas páginas de gestão.
+- O código da página orcamentos.html e style.css não foi alterado nesta revisão.
+
+LIMITAÇÕES / VALIDAÇÃO PENDENTE
+- Não foi possível executar uma sessão autenticada contra o Supabase remoto nesta execução.
+- Portanto, não é correto declarar teste ponta a ponta de produção aprovado. Depois de publicar, testar login, cadastrar um rolo, registrar consumo, verificar o saldo após recarregar e confirmar public.app_data no Supabase.
+- Se as páginas continuarem redirecionando para login ou exibirem erro de RLS, verificar as políticas da tabela public.app_data e executar o supabase-setup.sql atualizado no projeto remoto, após revisar a migração.
