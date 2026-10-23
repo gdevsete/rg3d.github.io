@@ -74,6 +74,8 @@
     $('outValidity').textContent = $('validity').value;
     $('outClient').textContent = $('clientName').value.trim() || 'Nome do cliente';
     $('outStatus').textContent = $('clientStatus').value;
+    const contactParts = [$('clientWhatsapp')?.value.trim(), $('clientCity')?.value.trim()].filter(Boolean);
+    if ($('outClientContact')) $('outClientContact').textContent = contactParts.join(' · ');
     $('outProduction').textContent = $('productionTime').value || 'A combinar';
     $('previewTagline').textContent = ($('tagline').value || 'Soluções em impressão 3D para sua ideia sair do papel').toUpperCase();
     $('outWhatsapp').textContent = $('whatsapp').value || 'WhatsApp não informado';
@@ -135,6 +137,43 @@
     $('manualTotal').value = Math.max(0, subtotal - discount + shipping).toFixed(2);
     render();
   });
+
+  // Salva o orçamento como pedido na base compartilhada (sincronizada com Supabase pelo auth.js).
+  $('saveOrderBtn')?.addEventListener('click', () => {
+    const clientName = $('clientName').value.trim();
+    const city = $('clientCity').value.trim();
+    if (!clientName || !city) { alert('Informe o nome do cliente e a cidade do pedido. O endereço é opcional.'); return; }
+    const items = getItems();
+    const total = Math.max(0, Number($('manualTotal').value) || 0);
+    const cost = Math.max(0, Number($('internalCost')?.value) || 0);
+    let business = {orders:[], customers:[]};
+    try { business = JSON.parse(localStorage.getItem('rgforge3d_business_v1') || '{"orders":[],"customers":[]}'); } catch(e) {}
+    if (!Array.isArray(business.orders)) business.orders = [];
+    if (!Array.isArray(business.customers)) business.customers = [];
+    const now = new Date().toISOString();
+    const order = {
+      id: (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`),
+      quoteNumber: $('quoteNumber').value.trim() || `RG-${Date.now()}`,
+      date: $('quoteDate').value || new Date().toISOString().slice(0,10),
+      clientName, whatsapp: $('clientWhatsapp').value.trim(), city,
+      address: $('clientAddress').value.trim(), status: $('clientStatus').value,
+      items, discount: Math.max(0, Number($('discount').value)||0),
+      shipping: Math.max(0, Number($('shipping').value)||0), total, internalCost: cost,
+      profit: total - cost, notes: $('notes').value, updatedAt: now, createdAt: now
+    };
+    const existingIndex = business.orders.findIndex(o => o.quoteNumber === order.quoteNumber);
+    if (existingIndex >= 0) {
+      if (!confirm(`O orçamento ${order.quoteNumber} já existe. Deseja atualizar o pedido salvo?`)) return;
+      order.id = business.orders[existingIndex].id; order.createdAt = business.orders[existingIndex].createdAt || now;
+      business.orders[existingIndex] = order;
+    } else business.orders.push(order);
+    const customerIndex = business.customers.findIndex(c => c.name.toLowerCase() === clientName.toLowerCase() && c.city.toLowerCase() === city.toLowerCase());
+    const customer = {name:clientName, whatsapp:order.whatsapp, city, address:order.address, updatedAt:now};
+    if (customerIndex >= 0) business.customers[customerIndex] = {...business.customers[customerIndex], ...customer}; else business.customers.push(customer);
+    localStorage.setItem('rgforge3d_business_v1', JSON.stringify(business));
+    alert(`Pedido ${order.quoteNumber} salvo. Lucro estimado: ${money(order.profit)}. Acesse Pedidos para consultar os registros.`);
+  });
+
   $('printBtn').addEventListener('click', () => window.print());
   $('toggleBackgroundBtn').addEventListener('click', () => {
     const isLight = $('quote').classList.toggle('quote-light');
@@ -153,7 +192,7 @@
   $('removeLogo').addEventListener('click', () => { logoDataUrl = ''; $('logoUpload').value = ''; render(); });
   $('resetBtn').addEventListener('click', () => {
     if (!confirm('Restaurar os dados do exemplo?')) return;
-    $('quoteNumber').value = 'RG-2026-001'; $('clientName').value = ''; $('clientStatus').value = 'Aguardando confirmação'; $('validity').value = '7 dias'; $('productionTime').value = 'Até 19 horas'; $('discount').value = '0'; $('shipping').value = '0'; $('manualTotal').value = '200.00'; $('notes').value = 'Produto conforme modelo aprovado pelo cliente.\nFrete não incluso, caso haja envio.\nAlterações no modelo podem impactar o valor final.'; $('tagline').value = 'Soluções em impressão 3D para sua ideia sair do papel'; $('whatsapp').value = '(XX) XXXXX-XXXX'; $('instagram').value = '@rgforge3d'; $('email').value = 'contato@rgforge3d.com'; $('website').value = 'www.rgforge3d.com'; $('itemsEditor').innerHTML = ''; addItem({name:'Chaveiro personalizado', description:'Personalizado em impressão 3D', qty:30, price:200/30}); logoDataUrl = ''; $('logoUpload').value = ''; $('removeLogo').click(); render();
+    $('quoteNumber').value = 'RG-2026-001'; $('clientName').value = ''; if($('clientWhatsapp'))$('clientWhatsapp').value=''; if($('clientCity'))$('clientCity').value=''; if($('clientAddress'))$('clientAddress').value=''; if($('internalCost'))$('internalCost').value='0'; $('clientStatus').value = 'Aguardando confirmação'; $('validity').value = '7 dias'; $('productionTime').value = 'Até 19 horas'; $('discount').value = '0'; $('shipping').value = '0'; $('manualTotal').value = '200.00'; $('notes').value = 'Produto conforme modelo aprovado pelo cliente.\nFrete não incluso, caso haja envio.\nAlterações no modelo podem impactar o valor final.'; $('tagline').value = 'Soluções em impressão 3D para sua ideia sair do papel'; $('whatsapp').value = '(XX) XXXXX-XXXX'; $('instagram').value = '@rgforge3d'; $('email').value = 'contato@rgforge3d.com'; $('website').value = 'www.rgforge3d.com'; $('itemsEditor').innerHTML = ''; addItem({name:'Chaveiro personalizado', description:'Personalizado em impressão 3D', qty:30, price:200/30}); logoDataUrl = ''; $('logoUpload').value = ''; $('removeLogo').click(); render();
   });
   render();
 })();

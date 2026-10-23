@@ -11,7 +11,7 @@
 <body>
   <header class="app-header">
     <div class="app-brand"><img src="assets/images/logo.png" alt="R&G Forge 3D" class="app-logo-image"></div>
-    <div class="header-copy"><strong>R&G FORGE 3D · ORÇAMENTOS</strong><span>Crie, personalize e exporte seus orçamentos</span></div><nav class="top-nav"><a href="index.html">Painel</a><a class="active" href="orcamentos.html">Orçamentos</a><a href="calculadora.html">Precificação</a><a href="estoque.html">Filamentos</a><a href="financeiro.html">Financeiro</a></nav>
+    <div class="header-copy"><strong>R&G FORGE 3D · ORÇAMENTOS</strong><span>Crie, personalize e exporte seus orçamentos</span></div><nav class="top-nav"><a href="index.html">Painel</a><a class="active" href="orcamentos.html">Orçamentos</a><a href="calculadora.html">Precificação</a><a href="estoque.html">Filamentos</a><a href="financeiro.html">Financeiro</a><a href="pedidos.html">Pedidos</a></nav>
     <button class="btn btn-orange" id="printBtn" type="button">↗ Salvar / Imprimir PDF</button>
   </header>
 
@@ -28,7 +28,11 @@
       </div></details>
 
       <details open class="edit-section"><summary>02 / Dados do cliente</summary><div class="fields">
-        <label>Nome do cliente<input id="clientName" placeholder="Nome ou empresa"></label>
+        <label>Nome do cliente *<input id="clientName" placeholder="Nome ou empresa"></label>
+        <label>WhatsApp do cliente<input id="clientWhatsapp" type="tel" placeholder="(DDD) 99999-9999"></label>
+        <label>Cidade do pedido *<input id="clientCity" placeholder="Cidade / UF"></label>
+        <label>Endereço (opcional)<input id="clientAddress" placeholder="Rua, número, bairro, complemento"></label>
+        <label>Custo interno estimado do pedido (R$)<input id="internalCost" type="number" min="0" step="0.01" value="0"><small>Não aparece no orçamento do cliente; usado para estimar lucro.</small></label>
         <label>Status do orçamento<select id="clientStatus"><option>Aguardando confirmação</option><option>Orçamento aprovado</option><option>Em produção</option><option>Concluído</option></select></label>
       </div></details>
 
@@ -50,7 +54,7 @@
         <label>Logomarca PNG (opcional)<input id="logoUpload" type="file" accept="image/png"></label><p class="field-help">Você também pode substituir o arquivo assets/images/logo.png pela sua logo em PNG.</p>
         <button id="removeLogo" class="btn btn-outline" type="button">Usar logo do arquivo PNG</button>
       </div></details>
-      <div class="editor-bottom"><button id="resetBtn" class="btn btn-quiet" type="button">Restaurar exemplo</button><span>Os dados ficam neste navegador durante a sessão.</span></div>
+      <div class="editor-bottom"><button id="saveOrderBtn" class="btn btn-orange" type="button">Salvar pedido no sistema</button><button id="resetBtn" class="btn btn-quiet" type="button">Restaurar exemplo</button><span>Nome e cidade são obrigatórios para salvar o pedido.</span></div>
     </aside>
 
     <section class="preview-area">

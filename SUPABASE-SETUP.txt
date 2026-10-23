@@ -12,3 +12,7 @@ O sincronizador mantém as chaves existentes do aplicativo (estoque, calculadora
 
 
 Módulo Financeiro: execute novamente o arquivo supabase-setup.sql no SQL Editor para permitir a chave rgforge3d_finance_v1 na tabela app_data.
+
+Pedidos e clientes: os registros ficam na chave rgforge3d_business_v1 (pedidos, clientes, venda, custo interno e lucro estimado). Execute o supabase-setup.sql atualizado para permitir essa chave. Nome do cliente e cidade são obrigatórios ao salvar; WhatsApp é recomendado e endereço é opcional.
+
+Importante: o lucro de um pedido só é confiável quando você informa o custo interno total real/estimado no orçamento ou ajusta esse custo na página Pedidos. O sistema calcula lucro estimado = total de venda - custo interno; isso não substitui apuração contábil/impostos.

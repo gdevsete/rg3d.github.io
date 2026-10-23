@@ -11,3 +11,7 @@ Para publicar no GitHub Pages, envie todos os arquivos e pastas do projeto para 
 
 
 SUPABASE: veja SUPABASE-SETUP.txt e execute supabase-setup.sql no SQL Editor. A entrada agora é por login.html.
+
+pedidos.html: histórico de pedidos/clientes, pesquisa por nome, cidade, WhatsApp e número, alteração de status, custo interno e lucro estimado. Os pedidos são salvos na chave compartilhada rgforge3d_business_v1 e sincronizados no Supabase quando há sessão autenticada.
+
+Ao salvar um pedido em orcamentos.html, informe nome e cidade; endereço é opcional. Preencha o custo interno estimado para que o lucro apresentado seja útil.
