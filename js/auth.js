@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const LOGIN='login.html';
 const url=window.RG_SUPABASE_URL, key=window.RG_SUPABASE_PUBLISHABLE_KEY;
-const KEYS=['rgforge3d_stock_v1','rgforge3d_calc_v1','rgforge3d-tools-v1','rgforge3d_finance_v1','rgforge3d_business_v1'];
+const KEYS=['rgforge3d_stock_v1','rgforge3d_calc_v1','rgforge3d-tools-v1','rgforge3d_finance_v1','rgforge3d_business_v1','rgforge3d_materials_v1'];
 if(!window.supabase||!url||!key){document.body.innerHTML='<p style="padding:2rem;color:#fff;background:#111">Erro: Supabase não carregou. Atualize a página ou confira a configuração.</p>';throw new Error('Supabase config missing');}
 // O cliente Auth é criado antes do adaptador de dados para que a sessão do Supabase continue funcionando.
 const client=window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});window.rgSupabase=client;
