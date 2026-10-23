@@ -1,0 +1,20 @@
+RELATÓRIO DE TESTES — R&G FORGE 3D
+Data: 23/10/2026
+
+TESTES EXECUTADOS NESTE AMBIENTE
+- Node.js --check em todos os arquivos JavaScript: aprovado.
+- Verificação de IDs referenciados pelos módulos dedicados (pedidos, financeiro, estoque e calculadora): aprovada.
+- Revisão estática das referências de CSS e arquivos locais: realizada.
+- Correção visual da tabela de Pedidos: wrapper limitado à largura do painel, rolagem horizontal interna e box-sizing global.
+- Ajuste das mensagens do Financeiro para não declarar que os dados foram salvos localmente quando uma gravação na nuvem falha.
+
+LIMITAÇÕES IMPORTANTES
+- Não foi possível confirmar uma operação de ponta a ponta no Supabase real neste ambiente: não há sessão autenticada do usuário ray, não foi executado o SQL no projeto remoto e não é possível confirmar a configuração de RLS/Realtime do projeto hospedado.
+- A validação de sintaxe não garante que políticas RLS, credenciais, tabelas ou rede estejam corretas em produção.
+- Os dados antigos que existiam apenas no armazenamento local do navegador não são migrados automaticamente.
+- Para considerar a integração validada, depois de publicar é necessário testar login, leitura, criação, edição e exclusão de um registro de teste, conferir a linha em public.app_data e verificar o acesso em outro navegador.
+
+ARMAZENAMENTO
+- O adaptador do projeto substitui localStorage por um armazenamento em memória para compatibilidade com módulos legados e encaminha os dados comerciais para public.app_data.
+- A sessão de autenticação continua sendo gerenciada pelo SDK do Supabase.
+- Se houver erro de sincronização, conferir o aviso visual e o console do navegador; não considerar o registro salvo até confirmar no Supabase.
