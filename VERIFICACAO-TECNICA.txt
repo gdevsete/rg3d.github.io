@@ -1,0 +1,10 @@
+VERIFICAÇÃO TÉCNICA — MODO SUPABASE-ONLY
+
+- O adaptador substitui localStorage usado pelo código legado por armazenamento em memória e grava app_data no Supabase. Não persiste registros comerciais no navegador.
+- auth.js hidrata dados do usuário antes de iniciar os módulos. Os módulos aguardam rgDataReady.
+- O SQL aplica RLS por user_id; execute no Supabase antes de testar.
+- O navegador precisa estar autenticado e conectado para consultar/gravar dados.
+- A sintaxe JavaScript deve ser validada com Node. Isso não substitui testes de integração no projeto Supabase real.
+- Dados antigos guardados apenas no localStorage do navegador não são migrados automaticamente para evitar importar dados sem confirmação.
+- A sessão do Supabase Auth continua sob gestão do SDK para que o login sobreviva à navegação entre páginas. Dados comerciais não são guardados nessa sessão.
+- Para sincronização em tempo real entre abas/dispositivos, habilite Realtime para public.app_data no Supabase.

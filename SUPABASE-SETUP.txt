@@ -1,18 +1,11 @@
-R&G FORGE 3D — CONFIGURAÇÃO SUPABASE
+R&G FORGE 3D — MODO SUPABASE-ONLY
 
-1) No Supabase, abra SQL Editor, crie uma query e execute todo o arquivo supabase-setup.sql.
-2) Abra Authentication > Users e crie um usuário com e-mail ray@rgforge3d.local e senha forte definida por você; confirme o usuário se o projeto exigir. A tela aceita o nome ray e usa esse e-mail internamente. Não use uma senha fixa no código.
-3) Em Authentication > URL Configuration, configure Site URL para a URL publicada na Vercel e adicione também a URL local de desenvolvimento em Redirect URLs, se necessário.
-4) Na Vercel, faça redeploy depois de enviar os arquivos.
-5) Acesse /login.html.
+1. No Supabase, execute o arquivo supabase-setup.sql no SQL Editor.
+2. Confirme que Authentication > Users contém o usuário administrativo configurado (ray@rgforge3d.local).
+3. A aplicação carrega e salva dados comerciais somente na tabela public.app_data, sob a conta autenticada. O adaptador de compatibilidade mantém os dados em memória durante a página; ele NÃO lê nem grava registros comerciais em localStorage/sessionStorage.
+4. IMPORTANTE: dados que existiam apenas no navegador anterior não serão importados automaticamente. Antes da troca, exporte os backups e planeje uma importação explícita; este pacote não lê o armazenamento local antigo.
+5. A sessão de autenticação é gerenciada pelo SDK do Supabase para permitir navegação entre páginas. Isso é credencial de sessão, não armazenamento de pedidos/estoque/financeiro.
+6. Realtime é usado para atualizar páginas abertas quando o projeto Supabase tiver a tabela app_data habilitada na publicação Realtime. Sem isso, cada página ainda carrega os dados mais recentes do banco ao abrir/recarregar.
+7. Se a gravação falhar, a interface mostra aviso vermelho; os dados não são tratados como salvos com sucesso. Confira RLS, SQL e a conexão.
 
-IMPORTANTE: a URL e a publishable key no js/supabase-config.js são próprias para frontend. Nunca coloque service_role / secret key no navegador. A tabela app_data usa RLS para que cada usuário só acesse os próprios dados.
-
-O sincronizador mantém as chaves existentes do aplicativo (estoque, calculadora e orçamento (rgforge3d-tools-v1) e as sincroniza com Supabase depois do login. A primeira sincronização mantém dados locais quando ainda não existe registro na nuvem; depois compara updated_at para decidir qual versão carregar. Faça backup JSON antes da primeira migração.
-
-
-Módulo Financeiro: execute novamente o arquivo supabase-setup.sql no SQL Editor para permitir a chave rgforge3d_finance_v1 na tabela app_data.
-
-Pedidos e clientes: os registros ficam na chave rgforge3d_business_v1 (pedidos, clientes, venda, custo interno e lucro estimado). Execute o supabase-setup.sql atualizado para permitir essa chave. Nome do cliente e cidade são obrigatórios ao salvar; WhatsApp é recomendado e endereço é opcional.
-
-Importante: o lucro de um pedido só é confiável quando você informa o custo interno total real/estimado no orçamento ou ajusta esse custo na página Pedidos. O sistema calcula lucro estimado = total de venda - custo interno; isso não substitui apuração contábil/impostos.
+A chave publishable pode estar no frontend; NUNCA coloque service_role/secret key no site.

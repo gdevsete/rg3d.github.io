@@ -1,4 +1,5 @@
-(() => {
+(async () => {
+  await (window.rgDataReady || Promise.resolve());
   const $ = (id) => document.getElementById(id);
   const money = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value) || 0);
   const dateBR = (value) => { if (!value) return '—'; const [y,m,d] = value.split('-'); return `${d}/${m}/${y}`; };
