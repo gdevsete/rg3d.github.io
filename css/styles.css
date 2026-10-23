@@ -1226,3 +1226,46 @@ button {
   .print-quote-page.quote-light .item-number { background: #fff3e8 !important; border-color: #ffc08f !important; }
   .print-quote-page.quote-light .benefits > div { border-right-color: #e2b18e !important; }
 }
+
+
+/* 10. Ferramentas de gestão da oficina */
+.tools-area{max-width:1250px;margin:34px auto 70px;padding:0 22px;color:#eee}
+.tools-title{margin-bottom:18px}.tools-title h2{margin:5px 0;font-size:clamp(25px,3vw,36px);font-weight:900;letter-spacing:-.5px}.tools-title p,.tool-card .muted{color:#aaa;line-height:1.55}
+.tool-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.tool-tab{border:1px solid #3b3b40;background:#18181b;color:#ddd;padding:12px 16px;border-radius:9px;font-weight:800;cursor:pointer}
+.tool-tab.active,.tool-tab:hover{background:#ff690b;border-color:#ff690b;color:#111}
+.tool-panel{display:none}.tool-panel.active{display:block}
+.tool-card{background:#151518;border:1px solid #37373d;border-radius:14px;padding:clamp(16px,3vw,26px);box-shadow:0 12px 35px #0003}
+.tool-card h3{margin:0 0 8px;font-size:23px}.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}
+.tool-grid label{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#c6c6ca;font-weight:700}
+.tool-grid input,.tool-grid select{width:100%;min-width:0;border:1px solid #424249;border-radius:8px;background:#0d0d0f;color:#f4f4f4;padding:11px 12px;outline:none}
+.tool-grid input:focus,.tool-grid select:focus{border-color:#ff690b;box-shadow:0 0 0 2px #ff690b2c}
+.tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+.btn-secondary{background:#28282d;border:1px solid #45454c;color:#eee;border-radius:8px;padding:11px 14px;font-weight:800;cursor:pointer}
+.file-button{display:inline-flex;align-items:center;cursor:pointer}.file-button input{display:none}
+.price-results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:20px}
+.price-results>div{background:#0c0c0e;border:1px solid #38383e;border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:10px}
+.price-results span{font-size:12px;color:#aaa}.price-results strong{font-size:clamp(17px,2vw,24px);color:#ff8a16;overflow-wrap:anywhere}
+.tool-note{font-size:12px;line-height:1.6;color:#a4a4ab;margin-top:16px}
+.stock-summary{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.stock-pill{padding:10px 13px;background:#0b0b0d;border:1px solid #37373d;border-radius:8px;font-size:13px}.stock-pill strong{color:#ff8a16}
+.table-wrap{width:100%;overflow-x:auto;margin-top:14px}.tool-table{width:100%;border-collapse:collapse;min-width:650px;font-size:13px}.tool-table th,.tool-table td{padding:12px 10px;text-align:left;border-bottom:1px solid #34343a}.tool-table th{background:#0e0e10;color:#ff9a43;font-size:11px;text-transform:uppercase;letter-spacing:.5px}.tool-table td{color:#e5e5e8}.tool-table button{border:1px solid #4a4a50;background:#252529;color:#eee;padding:6px 8px;border-radius:6px;cursor:pointer;margin:2px}.tool-table button.danger{color:#ff8b8b}.status-ok{color:#6ee7a2;font-weight:800}.status-low{color:#ffb14a;font-weight:800}.status-empty{color:#ff7777;font-weight:800}.tool-toast{position:sticky;bottom:14px;margin-top:12px;color:#fff;font-size:13px}.tool-toast:empty{display:none}.tool-toast.show{background:#242429;border-left:4px solid #ff690b;border-radius:6px;padding:12px}
+@media(max-width:850px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.price-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.tools-area{padding:0 12px}.tool-grid,.price-results{grid-template-columns:1fr}.tool-tabs{display:grid;grid-template-columns:1fr}.tool-tab{text-align:left}.tool-actions>*{width:100%;justify-content:center}}
+@media print{
+  body.tools-printing>*:not(#forgeTools){display:none!important}
+  body.tools-printing #forgeTools{display:block!important;max-width:none;margin:0;padding:0;color:#111}
+  body.tools-printing #forgeTools .tool-tabs,body.tools-printing #forgeTools .tools-title p,body.tools-printing #forgeTools .tool-actions,body.tools-printing #forgeTools .tool-note,body.tools-printing #forgeTools .tool-toast{display:none!important}
+  body.tools-printing #forgeTools .tool-panel{display:none!important}
+  body.tools-printing #forgeTools .tool-panel.print-target{display:block!important}
+  body.tools-printing #forgeTools .tool-card{background:#fff;color:#111;border:0;box-shadow:none;padding:0}
+  body.tools-printing #forgeTools .tool-card h3,body.tools-printing #forgeTools .tool-card p{color:#111}
+  body.tools-printing #forgeTools .tool-table{min-width:0;font-size:9pt}
+  body.tools-printing #forgeTools .tool-table th,body.tools-printing #forgeTools .tool-table td{color:#111;border-color:#bbb}
+  body.tools-printing #forgeTools .tool-table th{background:#eee}
+  body.tools-printing #forgeTools .tool-table button{display:none}
+  body.tools-printing #forgeTools .price-results>div,body.tools-printing #forgeTools .stock-pill{background:#fff;border-color:#bbb}
+  body.tools-printing #forgeTools .price-results span{color:#333}
+  body.tools-printing #forgeTools .price-results strong{color:#111}
+}
+
+.tool-table select{max-width:230px;background:#101012;color:#eee;border:1px solid #444;border-radius:6px;padding:7px}

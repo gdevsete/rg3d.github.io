@@ -1,0 +1,10 @@
+R&G FORGE 3D — PAINEL ORGANIZADO
+
+index.html: painel inicial com links para cada área.
+orcamentos.html: gerador de orçamentos original.
+calculadora.html: calculadora de precificação.
+estoque.html: cadastro e controle de filamentos e consumo por projeto.
+
+Os dados de calculadora e estoque ficam no LocalStorage do navegador. Em Estoque, exporte backups JSON regularmente.
+
+Para publicar no GitHub Pages, envie todos os arquivos e pastas do projeto para a raiz da branch main.

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>R&G Forge 3D | Orçamentos</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/gestao.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-brand"><img src="assets/images/logo.png" alt="R&G Forge 3D" class="app-logo-image"></div>
+    <div class="header-copy"><strong>R&G FORGE 3D · ORÇAMENTOS</strong><span>Crie, personalize e exporte seus orçamentos</span></div><nav class="top-nav"><a href="index.html">Painel</a><a class="active" href="orcamentos.html">Orçamentos</a><a href="calculadora.html">Precificação</a><a href="estoque.html">Filamentos</a></nav>
+    <button class="btn btn-orange" id="printBtn" type="button">↗ Salvar / Imprimir PDF</button>
+  </header>
+
+  <main class="workspace">
+    <aside class="editor">
+      <div class="editor-heading"><div><span class="eyebrow">PAINEL DE CONTROLE</span><h1>Personalizar orçamento</h1></div><span class="live-dot">AO VIVO</span></div>
+      <p class="muted intro">Edite os campos abaixo. A pré-visualização será atualizada automaticamente.</p>
+
+      <details open class="edit-section"><summary>01 / Dados do orçamento</summary><div class="fields two-col">
+        <label>Número do orçamento<input id="quoteNumber" value="RG-2026-001"></label>
+        <label>Data<input id="quoteDate" type="date"></label>
+        <label>Validade<select id="validity"><option>3 dias</option><option selected>7 dias</option><option>10 dias</option><option>15 dias</option><option>30 dias</option></select></label>
+        <label>Prazo de produção<input id="productionTime" value="Até 19 horas"></label>
+      </div></details>
+
+      <details open class="edit-section"><summary>02 / Dados do cliente</summary><div class="fields">
+        <label>Nome do cliente<input id="clientName" placeholder="Nome ou empresa"></label>
+        <label>Status do orçamento<select id="clientStatus"><option>Aguardando confirmação</option><option>Orçamento aprovado</option><option>Em produção</option><option>Concluído</option></select></label>
+      </div></details>
+
+      <details open class="edit-section"><summary>03 / Produtos e valores</summary><div id="itemsEditor" class="item-editors"></div><button id="addItem" class="btn btn-outline full" type="button">＋ Adicionar produto</button>
+        <div class="fields two-col totals-fields"><label>Desconto (R$)<input id="discount" type="number" min="0" step="0.01" value="0"></label><label>Frete (R$)<input id="shipping" type="number" min="0" step="0.01" value="0"></label></div>
+        <div class="fields total-controls"><label>Valor total manual (R$)<input id="manualTotal" type="number" min="0" step="0.01" value="200.00"></label><button id="autoCalculateBtn" class="btn btn-orange full" type="button">⚡ Calcular total automaticamente</button><p class="field-help">O total fica manual por padrão. Use o botão quando quiser calcular a partir dos produtos, desconto e frete; depois você pode editar o valor livremente.</p></div>
+      </details>
+
+      <details open class="edit-section"><summary>04 / Observações</summary><div class="fields">
+        <label>Observações (uma por linha)<textarea id="notes" rows="4">Produto conforme modelo aprovado pelo cliente.\nFrete não incluso, caso haja envio.\nAlterações no modelo podem impactar o valor final.</textarea></label>
+        <label>Descrição curta da empresa<textarea id="tagline" rows="2">Soluções em impressão 3D para sua ideia sair do papel.</textarea></label>
+      </div></details>
+
+      <details class="edit-section"><summary>05 / Contato e identidade visual</summary><div class="fields">
+        <label>WhatsApp<input id="whatsapp" value="(XX) XXXXX-XXXX"></label>
+        <label>Instagram<input id="instagram" value="@rgforge3d"></label>
+        <label>E-mail<input id="email" value="contato@rgforge3d.com"></label>
+        <label>Site<input id="website" value="www.rgforge3d.com"></label>
+        <label>Logomarca PNG (opcional)<input id="logoUpload" type="file" accept="image/png"></label><p class="field-help">Você também pode substituir o arquivo assets/images/logo.png pela sua logo em PNG.</p>
+        <button id="removeLogo" class="btn btn-outline" type="button">Usar logo do arquivo PNG</button>
+      </div></details>
+      <div class="editor-bottom"><button id="resetBtn" class="btn btn-quiet" type="button">Restaurar exemplo</button><span>Os dados ficam neste navegador durante a sessão.</span></div>
+    </aside>
+
+    <section class="preview-area">
+      <div class="preview-top"><div><span class="eyebrow">PRÉ-VISUALIZAÇÃO</span><h2>Seu orçamento</h2></div><div class="preview-actions"><button id="toggleBackgroundBtn" class="btn btn-outline theme-toggle" type="button" aria-pressed="false">☼ Testar fundo branco</button><span class="paper-label">A4 · RETRATO</span></div></div>
+      <article id="quote" class="quote-sheet">
+        <section class="quote-hero">
+          <div class="hero-brand">
+            <div id="logoBox" class="logo-box"><img src="assets/images/logo.png" alt="Logomarca R&G Forge 3D" class="brand-logo-image"></div>
+          </div>
+          <div class="hero-services"><div><span class="service-icon">⬡</span><span>IMPRESSÃO 3D<br><b>DE ALTA QUALIDADE</b></span></div><div><span class="service-icon">⚙</span><span>PROJETOS<br><b>PERSONALIZADOS</b></span></div><div><span class="service-icon">♧</span><span>IDEIAS EM<br><b>PRODUTOS REAIS</b></span></div></div>
+          <div class="hero-glow"></div>
+        </section>
+
+        <section class="quote-title-row"><div class="quote-title"><h1>ORÇAMENTO</h1><p id="previewTagline">SOLUÇÕES EM IMPRESSÃO 3D PARA<br>SUA IDEIA SAIR DO PAPEL</p></div><div class="quote-meta"><div><small>Nº DO ORÇAMENTO</small><strong id="outNumber">RG-2026-001</strong></div><div><small>DATA</small><strong id="outDate">19/10/2026</strong></div><div><small>VALIDADE</small><strong id="outValidity">7 dias</strong></div></div></section>
+
+        <section class="client-bar"><div class="client-avatar">♟</div><div><strong>CLIENTE</strong><span id="outClient">Nome do cliente</span><small id="outStatus">Aguardando confirmação</small></div></section>
+
+        <section class="table-wrap"><table class="product-table"><thead><tr><th>ITEM</th><th>DESCRIÇÃO</th><th>QTD.</th><th>VALOR UNITÁRIO</th><th>VALOR TOTAL</th></tr></thead><tbody id="outItems"></tbody></table></section>
+
+        <section class="summary-panel"><div class="notes-block"><div class="notes-icon">▤</div><div><strong>OBSERVAÇÕES</strong><ul id="outNotes"></ul><p class="production-line">PRAZO DE PRODUÇÃO: <b id="outProduction">Até 19 horas</b></p></div></div><div class="total-block"><small>VALOR TOTAL DO ORÇAMENTO</small><div id="outTotal">R$ 200,00</div><div id="outBreakdown" class="breakdown"></div></div></section>
+
+        <section class="benefits"><div><b class="benefit-icon">◇</b><span><strong>QUALIDADE</strong><small>Acabamento preciso<br>e profissional</small></span></div><div><b class="benefit-icon">ϟ</b><span><strong>AGILIDADE</strong><small>Produção e entrega<br>no prazo combinado</small></span></div><div><b class="benefit-icon">⚙</b><span><strong>PERSONALIZAÇÃO</strong><small>Seu projeto do seu jeito</small></span></div><div><b class="benefit-icon">♢</b><span><strong>CONFIANÇA</strong><small>Suporte e<br>acompanhamento</small></span></div></section>
+
+        <footer class="quote-footer"><div class="footer-brand"><img src="assets/images/logo.png" alt="Logomarca R&G Forge 3D" class="footer-logo-image"><small>IMPRESSÃO • DESIGN • PERSONALIZAÇÃO</small></div><div class="footer-contacts"><span>◉ <b id="outWhatsapp">(XX) XXXXX-XXXX</b></span><span>◎ <b id="outInstagram">@rgforge3d</b></span><span>✉ <b id="outEmail">contato@rgforge3d.com</b></span><span>⊕ <b id="outWebsite">www.rgforge3d.com</b></span></div><div class="footer-slogan">SUA IDEIA<br>EM <b>3D</b></div></footer>
+      </article>
+      <p class="preview-hint">Dica: clique em <b>Salvar / Imprimir PDF</b> e selecione “Salvar como PDF” no destino da impressão.</p>
+    </section>
+  </main>
+
+  <div id="printPages" class="print-pages" aria-hidden="true"></div>
+  <template id="itemTemplate"><div class="item-editor"><div class="item-editor-head"><strong>Produto</strong><button class="remove-item" type="button" title="Remover produto">×</button></div><div class="fields"><label>Nome do produto<input class="item-name" value="Chaveiro personalizado"></label><label>Descrição<input class="item-description" value="Personalizado em impressão 3D"></label></div><div class="fields two-col"><label>Quantidade<input class="item-qty" type="number" min="1" step="1" value="30"></label><label>Valor unitário (R$)<input class="item-price" type="number" min="0" step="0.01" value="6.6666667"></label></div></div></template>
+  <script src="js/app.js"></script>
+</body>
+</html>
